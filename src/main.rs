@@ -16,14 +16,20 @@ fn main() {
         let total_memory = sys.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
         let used_memory = sys.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
 
-        print!(
-            "\rTotal RAM: {:.2} GB / Used RAM: {:.2} GB  ",
+        let cpu_usage = sys.global_cpu_usage();
+
+        println!("CPU usage: {:.1}% \x1B[K", cpu_usage);
+
+        println!(
+            "\rTotal RAM: {:.2} GB / Used RAM: {:.2} GB   ",
             total_memory, used_memory
         );
 
         io::stdout().flush().unwrap();
 
         thread::sleep(Duration::from_millis(500));
+
+        print!("\x1B[2A");
     }
 }
 
